@@ -1,0 +1,64 @@
+.App {}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+h3{
+  margin: 0px 0px
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(5px + 2vmin);
+  color: white;
+} 
+
+li{
+  list-style-type: none;
+}
+
+#taskList{  
+  background-color: #445c71;
+  border: aliceblue solid 2px;
+  border-radius: 10px;
+  min-width: 40vmin;
+}
+
+.logo{
+  cursor: pointer;
+  height: 31px;
+}
+
+ul{
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+
+div{
+  margin:10px 0px
+}
+.App-link {
+  color: #61dafb;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
