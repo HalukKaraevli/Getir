@@ -5,8 +5,9 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
+const path = require('path');
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
@@ -31,7 +32,10 @@ router.use(bodyParser.json());
 app.use(logger('dev'));
 
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'frontend-getir/build')));
 
+//-----------------REST API METHODS-------------------
 
 // this is get method
 // this method fetches all available data in the database
@@ -49,7 +53,6 @@ router.get('/get_tasks', (req, res) => {
 
 
 // this is update method
-// this method overwrites existing data in the database
 // Used for changing the state of the task. It could be Accomplished or not
 router.put('/update_task', (req, res) => {
   console.log(req.body)
@@ -102,34 +105,6 @@ router.delete('/delete_all',(req, res)=>{
       })
 })
 
-/**
-function markToDelete(id,callback){
-  Data.findById(id)
-  .exec()
-  .then((doc)=>{
-    console.log('1')
-    children = doc.children
-    if(children && children.length>0)
-      for(child of children)
-        markToDelete(child)
-    return new Promise((resolve,reject)=>
-    {resolve(doc)})
-  })
-  .then((doc)=>{
-    console.log(2)
-    doc.isSoftDeleted = true
-    doc.save()
-    .then(()=>{
-        console.log(3)
-        if(callback){
-          console.log('PARENT')
-          callback()
-        }
-    })
-  })
-}
- */
-
 // this is task delete method
 //3 level deep tasks
 router.delete('/delete_task', (req, res) => {
@@ -150,6 +125,11 @@ router.delete('/delete_task', (req, res) => {
 
 // append /api for our http requests
 app.use('/api', router);
+
+// If an  url that doesn't match any previous rules serve the front end  
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

@@ -1,10 +1,12 @@
 {
   "name": "getir",
   "version": "1.0.0",
-  "description": "Backend of the List App",
-  "main": "app.js",
+  "description": "Backend of the Task App",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "heroku-postbuild": "cd frontend-getir && npm install && npm run build"
   },
   "author": "Haluk Alper Karaevli",
   "license": "ISC",

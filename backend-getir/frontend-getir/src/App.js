@@ -8,8 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-const axios = require('axios');
-
 function App() {
   return (
     <div className="App">
@@ -37,7 +35,7 @@ class TaskRoot extends React.Component{
   }
 
   getData(){
-    fetch('http://localhost:3001/api/get_tasks',{method: 'get'})
+    fetch('/api/get_tasks',{method: 'get'})
     .then(results => {return results.json()})
     .then(res => {
       this.setState({data:res.data});
@@ -127,7 +125,7 @@ class TaskItem extends React.Component {
 
   deleteTask(e){
     e.stopPropagation()
-    fetch('http://localhost:3001/api/delete_task', {
+    fetch('/api/delete_task', {
       method: 'delete',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -144,14 +142,14 @@ class TaskItem extends React.Component {
           {this.state.isDone ? "👌" : "👉"} 
           <b style={{"color": "#61dafb", "font-weight":"600"}}>{this.state.body}</b>  
           {this.state.due_date ? " - " + (new Date(this.state.due_date)).toLocaleDateString('en-GB', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
+            year: 'numeric', 
+            month: 'long', 
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
       }): ""}
-          {this.props.depth_level < 3 ? <img className={'logo'} src={subtaskLogo} onClick={this.showCreateTask} style={optionsStyle}/> : null}
-          <img className={'logo'} src={deleteTaskLogo} onClick={this.deleteTask} style={optionsStyle}/>
+          {this.props.depth_level < 3 ? <img className={'logo'} alt={""} src={subtaskLogo} onClick={this.showCreateTask} style={optionsStyle}/> : null}
+          <img className={'logo'} alt={""} src={deleteTaskLogo} onClick={this.deleteTask} style={optionsStyle}/>
         </li>
         {this.state.children.map((child, index) => 
           <li key={child._id}><TaskItem data={child} depth_level={this.props.depth_level+1} rootgetdata={this.props.rootgetdata} parentShowModal={this.props.parentShowModal}/></li>
@@ -161,7 +159,7 @@ class TaskItem extends React.Component {
   }
 
   toggleStatus(){
-    fetch('http://localhost:3001/api/update_task', {
+    fetch('/api/update_task', {
       method: 'put',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -201,7 +199,7 @@ class TaskForm extends React.Component {
   handleDateChange = date => this.setState({ date: date })
 
   handleSubmit(event) {
-    fetch('http://localhost:3001/api/new_task', {
+    fetch('/api/new_task', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
