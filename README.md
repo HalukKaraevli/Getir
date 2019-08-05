@@ -8,9 +8,11 @@ The root of this repository is the backend code for the project.
 
 # Front-end
 I have used native react.js without any add-ons like redux, except for datepicker and modal.
+
 - For datepicker I have used: https://reactdatepicker.com/
 - For modal I have used: https://react-bootstrap.github.io/components/modal/
 
+You can see the front-end code in the folder named frontend-getir.
 # Deployment
 I have deployed the website on heroku.
 - You can go to the site by clicking this url => https://getir-task-assignment.herokuapp.com/
