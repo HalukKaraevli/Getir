@@ -112,6 +112,10 @@ router.delete('/delete_task', (req, res) => {
   ids = []
   ids.push(id)
   Data.findById(id).exec((err,doc)=>{
+    if(err)
+      return res.json({success: false})
+    if(!doc)
+      return res.json({success: false})
     ids.push(...doc.children)
   })
   Data.remove({parent:{"$in":ids}},()=>{

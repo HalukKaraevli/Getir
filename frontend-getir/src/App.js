@@ -39,13 +39,13 @@ class TaskRoot extends React.Component{
     .then(results => {return results.json()})
     .then(res => {
       this.setState({data:res.data});
-      console.log(this.state);
-      console.log('BBBBBBBBBBBBBBB');
+      //console.log(this.state);
+      //console.log('BBBBBBBBBBBBBBB');
       this.forceUpdate()})
   }
 
   showModal(id){
-    console.log(id)
+    //console.log(id)
     this.setState({show:true})
     this.setState({parent:id})
   }
@@ -87,6 +87,7 @@ class TaskItem extends React.Component {
       due_date: props.data? props.data.due_date : null,
       depth_level: this.props.depth_level,
       showOptions: false,
+      deleteInitialized: false,
     };
     this.showCreateTask = this.showCreateTask.bind(this)
     this.onHoverEnter = this.onHoverEnter.bind(this)
@@ -95,13 +96,14 @@ class TaskItem extends React.Component {
   }
 
   componentWillReceiveProps({data}){
-    console.log(data._id,this.state.depth_level,this.state)
+    //console.log(data._id,this.state.depth_level,this.state)
+    delete data.isDone
     this.setState(data)
-    console.log(data._id,this.state.depth_level,this.state)
+    //console.log(data._id,this.state.depth_level,this.state)
   }
 
   componentWillUnmount(){
-    console.log(this.state)
+    //console.log(this.state)
   }
   
   onHoverEnter(e){
@@ -124,14 +126,19 @@ class TaskItem extends React.Component {
   }
 
   deleteTask(e){
-    e.stopPropagation()
-    fetch('/api/delete_task', {
-      method: 'delete',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        id:this.state.id
-      })
-     }).then(()=>{this.props.rootgetdata(); console.log('AAAAAAAAAAAAAAAAA')});
+    if(!this.state.deleteInitialized){
+      this.setState({deleteInitialized: true})
+      e.stopPropagation()
+      fetch('/api/delete_task', {
+        method: 'delete',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          id:this.state.id
+        })
+      }).then((err)=>{this.props.rootgetdata();
+                      //console.log('AAAAAAAAAAAAAAAAA');
+                      }); 
+    }
   }
 
   render() {
@@ -188,7 +195,7 @@ class TaskForm extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    console.log(target)
+    //console.log(target)
     const name = target.name;
     const value = target.value;
     this.setState({
