@@ -7,10 +7,10 @@ I have used express.js with mongodb as database and mongoose as connector.
 The root of this repository is the backend code for the project.
 
 # Front-end
-I have used native react.js without any add-ons like redux, except for datepicker and modal.
+I have used native react.js without redux, for datepicker and modal I used libraries which are:
 
-- For datepicker I have used: https://reactdatepicker.com/
-- For modal I have used: https://react-bootstrap.github.io/components/modal/
+- For datepicker: https://reactdatepicker.com/
+- For modal: https://react-bootstrap.github.io/components/modal/
 
 You can see the front-end code in the folder named frontend-getir.
 # Deployment
